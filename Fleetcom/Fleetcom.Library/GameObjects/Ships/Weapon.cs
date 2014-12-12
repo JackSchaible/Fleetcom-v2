@@ -14,18 +14,17 @@ namespace Fleetcom.Library.GameObjects.Ships
             Missile
         }
 
-
-
         public Vector2 OffsetFromShip { get; set; }
         public bool IsSelected { get; set; }
         public Sprite WeaponSprite { get; set; }
         public Texture2D Projectile { get; set; }
         public ProjectileTypes ProjectileType { get; set; }
 
-        private List<IGameObject> _projectiles;
+        private List<IProjectile> _projectiles;
+        private float _projectileSpeed;
         private readonly TimeSpan _fireRate;
         private TimeSpan _lastFiredOn;
-        public Weapon(bool isSelected, Sprite weaponSprite, Vector2 offsetFromShip, Texture2D projectile, float speed, ProjectileTypes projectileType, TimeSpan fireRate)
+        public Weapon(bool isSelected, Sprite weaponSprite, Vector2 offsetFromShip, Texture2D projectile, float projectileSpeed, ProjectileTypes projectileType, TimeSpan fireRate)
         {
             IsSelected = isSelected;
             WeaponSprite = weaponSprite;
@@ -35,7 +34,8 @@ namespace Fleetcom.Library.GameObjects.Ships
 
             _fireRate = fireRate;
             _lastFiredOn = new TimeSpan(0);
-            _projectiles = new List<IGameObject>();
+            _projectiles = new List<IProjectile>();
+            _projectileSpeed = projectileSpeed;
         }
 
         public void Fire(GameTime gameTime, Vector2 shipPosition, float shipRotation)
@@ -48,7 +48,7 @@ namespace Fleetcom.Library.GameObjects.Ships
             switch (ProjectileType)
             {
                 case ProjectileTypes.Bullet:
-                    _projectiles.Add(new Sprite(Projectile, pos, shipRotation));
+                    _projectiles.Add(new Bullet(Projectile, pos, shipRotation, _projectileSpeed));
                     break;
             }
 
@@ -59,6 +59,13 @@ namespace Fleetcom.Library.GameObjects.Ships
         {
             if (WeaponSprite != null)
                 WeaponSprite.Update(gameTime);
+
+            for (var index = 0; index < _projectiles.Count; index++)
+            {
+                var projectile = _projectiles[index];
+                
+                //Remove projectiles
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

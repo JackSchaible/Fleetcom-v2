@@ -18,12 +18,17 @@ namespace Fleetcom.Library.GameObjects.Ships
         private readonly Vector2 _vector;
 
         #region Constructors
-        public Bullet(Texture2D texture, Vector2 position, Vector2 vector)
+        public Bullet(Texture2D texture, Vector2 position, float rotation, float speed)
         {
-            Sprite = new Sprite(texture, position, Sprite.OriginModes.Center);
+            Sprite = new Sprite(texture, position, rotation);
             ShouldRemove = false;
 
-            _vector = vector;
+            var rot = rotation - (Math.PI / 2);
+            var velocity = new Vector2((float)Math.Cos(rot),
+                (float)Math.Sin(rot));
+            velocity.Normalize();
+            _vector = velocity * speed;
+
             ExpiryOptions = new List<ProjectileExpiryOptions.ProjectileExpiryOption>();
             ExpiryOptions.Add(new ProjectileExpiryOptions.Distance(230));
         }
