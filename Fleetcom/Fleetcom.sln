@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleetcom", "Fleetcom\Fleetcom\Fleetcom.csproj", "{D23636A1-F2A4-4CA3-9B57-835898FC02F3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F} = {CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetcomContent", "Fleetcom\FleetcomContent\FleetcomContent.contentproj", "{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleetcom.Library", "Fleetcom.Library\Fleetcom.Library.csproj", "{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Debug|x86.ActiveCfg = Debug|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Debug|x86.Build.0 = Debug|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Release|Any CPU.ActiveCfg = Release|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Release|Mixed Platforms.Build.0 = Release|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Release|x86.ActiveCfg = Release|x86
+		{D23636A1-F2A4-4CA3-9B57-835898FC02F3}.Release|x86.Build.0 = Release|x86
+		{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}.Debug|x86.ActiveCfg = Debug|x86
+		{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}.Release|Any CPU.ActiveCfg = Release|x86
+		{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C181F8F5-C4C1-4C2F-ADBD-0D01A4C8FA3C}.Release|x86.ActiveCfg = Release|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Debug|x86.ActiveCfg = Debug|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Debug|x86.Build.0 = Debug|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Release|Any CPU.ActiveCfg = Release|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Release|x86.ActiveCfg = Release|x86
+		{CD0C2D2F-A22B-4706-80C2-61249AA3BB7F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal
