@@ -38,6 +38,10 @@ namespace Fleetcom
 
             Components.Add(ContentManager);
             Components.Add(_player);
+
+            //_graphicsManager.PreferredBackBufferWidth = 1920;
+            //_graphicsManager.PreferredBackBufferHeight = 1080;
+            //_graphicsManager.IsFullScreen = true;
         }
 
         protected override void Initialize()
@@ -56,7 +60,6 @@ namespace Fleetcom
 #if DEBUG
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 #endif
-
             base.Initialize();
         }
 
@@ -70,7 +73,7 @@ namespace Fleetcom
 
         protected override void Update(GameTime gameTime)
         {
-            Controller.Update();
+            Controller.Update(gameTime);
             Keyboard.Update();
             
             base.Update(gameTime);

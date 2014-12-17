@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fleetcom.Library.Graphics.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -64,7 +65,10 @@ namespace Fleetcom.Library.GameObjects.Ships
             {
                 var projectile = _projectiles[index];
                 
-                //Remove projectiles
+                if (projectile.ShouldRemove)
+                    _projectiles.RemoveAt(index);
+
+                projectile.Update(gameTime);
             }
         }
 

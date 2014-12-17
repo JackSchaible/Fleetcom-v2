@@ -51,11 +51,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Ships\Human\F-302\Engine Glow.png">
-      <Name>Engine Glow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Graphics\Ships\Human\F-302\F-302.png">
       <Name>F-302</Name>
       <Importer>TextureImporter</Importer>
@@ -86,6 +81,117 @@
   <ItemGroup>
     <Compile Include="Graphics\Ships\Debug Aimer.png">
       <Name>Debug Aimer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Ships\Human\F-302\Engine Glow.png">
+      <Name>Engine Glow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\UI\Player\WeaponsMenu.png">
+      <Name>WeaponsMenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\UI\Input\Controller\360_A.png">
+      <Name>360_A</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_B.png">
+      <Name>360_B</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Back.png">
+      <Name>360_Back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Back_Alt.png">
+      <Name>360_Back_Alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Dpad.png">
+      <Name>360_Dpad</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Dpad_Down.png">
+      <Name>360_Dpad_Down</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Dpad_Left.png">
+      <Name>360_Dpad_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Dpad_Right.png">
+      <Name>360_Dpad_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Dpad_Up.png">
+      <Name>360_Dpad_Up</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_LB.png">
+      <Name>360_LB</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Left_Stick.png">
+      <Name>360_Left_Stick</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_LT.png">
+      <Name>360_LT</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_RB.png">
+      <Name>360_RB</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Right_Stick.png">
+      <Name>360_Right_Stick</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_RT.png">
+      <Name>360_RT</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Start.png">
+      <Name>360_Start</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Start_Alt.png">
+      <Name>360_Start_Alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_X.png">
+      <Name>360_X</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\UI\Input\Controller\360_Y.png">
+      <Name>360_Y</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -17,6 +17,11 @@ namespace Fleetcom.Library.GameObjects.Ships.Human
             WeaponArrays = new List<WeaponArray>();
             AuxiliarySystems = new List<Sprite>();
 
+            #region Engines
+            var engines = new Sprite(content.TextureContent[Keys.Ships.Human.F302.Engines.Glow], position,
+                Sprite.OriginModes.Center);
+            Engines.Add(engines);
+            #endregion
             #region WeaponArrays
             var missileAimGuide = new Sprite(content.TextureContent[Keys.Ships.Human.F302.Weapons.AimGuides.Missile],
                 position, Sprite.OriginModes.Center);
@@ -43,6 +48,7 @@ namespace Fleetcom.Library.GameObjects.Ships.Human
             railguns.FireRate = new TimeSpan(0, 0, 0, 0, 10);
             WeaponArraySize = 1;
             #endregion
+            
 
             #region Performance
             MaxTurnRate = ShipStats.F302.MaxTurnRate;

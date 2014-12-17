@@ -10,7 +10,7 @@ namespace Fleetcom.Library.GameObjects.Ships
     public class Bullet : IProjectile
     {
         public Sprite Sprite { get; set; }
-        public List<ProjectileExpiryOptions.ProjectileExpiryOption> ExpiryOptions { get; set; }
+        public ProjectileExpiryOptions.Distance ExpiryOption { get; set; }
         public bool ShouldRemove { get; set; }
 
         private readonly TimeSpan _timeToRemoveAt;
@@ -29,17 +29,15 @@ namespace Fleetcom.Library.GameObjects.Ships
             velocity.Normalize();
             _vector = velocity * speed;
 
-            ExpiryOptions = new List<ProjectileExpiryOptions.ProjectileExpiryOption>();
-            ExpiryOptions.Add(new ProjectileExpiryOptions.Distance(230));
+            ExpiryOption = new ProjectileExpiryOptions.Distance(230);
         }
         #endregion
 
         public void Update(GameTime gameTime)
         {
-            ShouldRemove = ExpiryOptions.Any(option => option.ShouldRemove);
-
             Sprite.Position += _vector;
-
+            ExpiryOption.Update(_vector.Length());
+            ShouldRemove = ExpiryOption.ShouldRemove;
             Sprite.Update(gameTime);
         }
 

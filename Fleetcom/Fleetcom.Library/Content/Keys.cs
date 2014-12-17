@@ -44,6 +44,37 @@
             }
         }
 
+        public static class UI
+        {
+            public static class Player
+            {
+                public const string WeaponsMenu = "Player_Menu";
+            }
+
+            public static class Input
+            {
+                public static class Controller
+                {
+                    public const string A = "360A";
+                    public const string B = "360B";
+                    public const string X = "360X";
+                    public const string Y = "360Y";
+                    public const string Back = "360Back";
+                    public const string Start = "360Start";
+                    public const string LeftShoulder = "360LShoulder";
+                    public const string LeftTrigger = "360LTrigger";
+                    public const string RightShoulder = "360RShoulder";
+                    public const string RightTrigger = "360RTrigger";
+                    public const string DPadUp = "360DPadUp";
+                    public const string DPadDown = "360DPadDown";
+                    public const string DPadLeft = "360DPadLeft";
+                    public const string DPadRight = "360DPadRight";
+                    public const string LeftStick = "360LStick";
+                    public const string RightStick = "360RStick";
+                }
+            }
+        }
+
         public enum Fonts
         {
 #if DEBUG

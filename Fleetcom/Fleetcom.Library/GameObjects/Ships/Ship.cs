@@ -40,7 +40,6 @@ namespace Fleetcom.Library.GameObjects.Ships
         protected float AccelerationRate { get; set; }
 
         private float _currentSpeed { get; set; }
-        private Vector2 _currentVelocity;
         #endregion
         #region Strafing Motion
         public Directions StrafeDirection { get; set; }
@@ -61,13 +60,16 @@ namespace Fleetcom.Library.GameObjects.Ships
         #region WeaponArrays
         public int CurrentWeaponArray { get; set; }
         public int WeaponArraySize { get; set; }
-        protected List<WeaponArray> WeaponArrays { get; set; }
+        public List<WeaponArray> WeaponArrays { get; set; }
+        #endregion
+        #region Animation
+        private float _forwardMoveSpeed;
         #endregion
         protected List<Sprite> AuxiliarySystems { get; set; }
 
         private GameTime CurrentGameTime { get; set; }
 
-        public virtual void Initialize()
+        public void Initialize()
         {
             CurrentWeaponArray = 0;
 
@@ -124,8 +126,10 @@ namespace Fleetcom.Library.GameObjects.Ships
         {
             MainShip.Draw(spriteBatch);
 
+            var engineOpacity = (_forwardMoveSpeed/10);
+
             foreach (var engine in Engines)
-                engine.Draw(spriteBatch);
+                engine.Draw(spriteBatch, engineOpacity);
 
             foreach (var weapon in WeaponArrays)
                 weapon.Draw(spriteBatch);
@@ -256,6 +260,10 @@ namespace Fleetcom.Library.GameObjects.Ships
                 (float)Math.Sin(rot));
             velocity.Normalize();
 
+            _forwardMoveSpeed = (velocity * _currentSpeed).Length();
+
+            if (_forwardMoveSpeed > 10)
+                _forwardMoveSpeed = 10;
 
             Position += velocity * _currentSpeed;
         }

@@ -1,10 +1,14 @@
 using System;
+using Fleetcom.Library.Content;
 using Fleetcom.Library.Controls;
 using Fleetcom.Library.GameObjects.Ships;
-using Fleetcom.Library.GameObjects.Ships.Ancient;
 using Fleetcom.Library.GameObjects.Ships.Human;
+using Fleetcom.Library.Graphics.Sprites;
+using Fleetcom.Library.Graphics.UI.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Events = Fleetcom.Library.GameComponents.Events;
+
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
 
@@ -12,49 +16,68 @@ namespace Fleetcom.GameComponents
 {
     public class Player : DrawableGameComponent
     {
+        public enum PlayerState
+        {
+            Flying,
+            WeaponsMenu
+        }
+        public event Events.StateChanged<PlayerState> StateChanged;
+        
         private Ship _playerShip;
+        private WeaponsMenu _menu;
+
         private SpriteBatch _spriteBatch;
         private Game _game;
-
+        
+        private PlayerState _currentPlayerState;
+        private PlayerState _lastPlayerState;
+        
         public Player(Game game)
             : base(game)
         {
             _game = game;
+            _currentPlayerState = PlayerState.Flying;
         }
 
         public override void Initialize()
         {
             _spriteBatch = new SpriteBatch(_game.GraphicsDevice);
-            //TODO: Replace with getting player's currently selected ship
+
+            Controller.RightShoulderHeld += OpenWeaponMenu;
+            Controller.RightShoulderPressed += ControllerRightShoulderPressed;
+            Controller.RightTriggerPressed += Controller_RightTriggerPressed;
 
             base.Initialize();
         }
 
+
         protected override void LoadContent()
         {
+            //TODO: Replace with getting player's currently selected ship
             _playerShip = new F302(((Game1)Game).ContentManager, new Vector2(300, 300));
             _playerShip.Initialize();
 
-            Controller.RightBumperPressed += () =>
-            {
-                var nextWeaponArray = _playerShip.CurrentWeaponArray + 1;
-
-                if (nextWeaponArray > _playerShip.WeaponArraySize)
-                    nextWeaponArray = 0;
-
-                _playerShip.ChangeWeapons(nextWeaponArray);
-            };
-
-            Controller.RightTriggerPressed += () => _playerShip.FireWeapons();
+            _menu = new WeaponsMenu(((Game1)Game).ContentManager);            
 
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            GetRotation();
-            GetStrafe();
-            GetMovement();
+            switch (_currentPlayerState)
+            {
+                case PlayerState.Flying:
+                    GetRotation();
+                    GetMovement();
+                    GetStrafe();
+                    break;
+
+                case PlayerState.WeaponsMenu:
+                    GetRotation();
+                    GetMovement();
+                    _menu.Update(gameTime);
+                    break;
+            }
 
             _playerShip.Update(gameTime);
 
@@ -66,6 +89,13 @@ namespace Fleetcom.GameComponents
             _spriteBatch.Begin();
 
             _playerShip.Draw(_spriteBatch);
+
+            switch (_currentPlayerState)
+            {
+                case PlayerState.WeaponsMenu:
+                    _menu.Draw(_spriteBatch);
+                    break;
+            }
 
             _spriteBatch.End();
 
@@ -93,7 +123,6 @@ namespace Fleetcom.GameComponents
                     _playerShip.CurrentDirection = Ship.Directions.Right;
             }
         }
-
         private void GetStrafe()
         {
             if (Controller.RightStick.X == 0)
@@ -117,7 +146,6 @@ namespace Fleetcom.GameComponents
                     _playerShip.StrafeDirection = Ship.Directions.Right;
             }
         }
-
         private void GetMovement()
         {
             if (Controller.LeftStick.Y == 0)
@@ -134,5 +162,31 @@ namespace Fleetcom.GameComponents
                 _playerShip.TargetSpeed = leftStickY * _playerShip.MaxSpeed;
             }
         }
+
+        #region Event Handlers
+        private void OpenWeaponMenu()
+        {
+            _lastPlayerState = _currentPlayerState;
+            _currentPlayerState = PlayerState.WeaponsMenu;
+
+            if (StateChanged != null)
+                StateChanged(_currentPlayerState, _lastPlayerState);
+
+            _menu.OpenMenu();
+        }
+        private void ControllerRightShoulderPressed()
+        {
+            var nextWeaponArray = _playerShip.CurrentWeaponArray + 1;
+
+            if (nextWeaponArray > _playerShip.WeaponArraySize)
+                nextWeaponArray = 0;
+
+            _playerShip.ChangeWeapons(nextWeaponArray);
+        }
+        private void Controller_RightTriggerPressed()
+        {
+            _playerShip.FireWeapons();
+        }
+        #endregion
     }
 }

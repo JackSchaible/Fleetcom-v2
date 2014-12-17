@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Fleetcom.Library.Graphics.Sprites
@@ -116,6 +117,11 @@ namespace Fleetcom.Library.Graphics.Sprites
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, Source, Color.White, Rotation, Origin, Scale, SpriteEffects, LayerDepth);
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch, float transparency)
+        {
+            spriteBatch.Draw(Texture, Position, Source, Color.White * transparency, Rotation, Origin, Scale, SpriteEffects, LayerDepth);
         }
     }
 }

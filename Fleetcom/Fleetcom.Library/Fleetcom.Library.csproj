@@ -64,6 +64,7 @@
     <Compile Include="Controls\Controller.cs" />
     <Compile Include="Controls\Events.cs" />
     <Compile Include="Controls\Keyboard.cs" />
+    <Compile Include="GameComponents\Events.cs" />
     <Compile Include="GameObjects\Ships\Bullet.cs" />
     <Compile Include="GameObjects\Ships\Human\F-302.cs" />
     <Compile Include="GameObjects\Ships\IProjectile.cs" />
@@ -74,7 +75,9 @@
     <Compile Include="GameObjects\Ships\Weapon.cs" />
     <Compile Include="GameObjects\Ships\WeaponArray.cs" />
     <Compile Include="Graphics\Sprites\AnimatedSprite.cs" />
+    <Compile Include="Graphics\Sprites\Events.cs" />
     <Compile Include="Graphics\Sprites\Sprite.cs" />
+    <Compile Include="Graphics\UI\Player\WeaponsMenu.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ControlSettings.cs" />
