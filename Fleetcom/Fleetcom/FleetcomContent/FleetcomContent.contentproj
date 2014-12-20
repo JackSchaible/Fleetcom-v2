@@ -93,13 +93,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\UI\Player\WeaponsMenu.png">
-      <Name>WeaponsMenu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Graphics\UI\Input\Controller\360_A.png">
       <Name>360_A</Name>
       <Importer>TextureImporter</Importer>
@@ -192,6 +185,13 @@
     </Compile>
     <Compile Include="Graphics\UI\Input\Controller\360_Y.png">
       <Name>360_Y</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\UI\Player\WeaponsMenu.png">
+      <Name>WeaponsMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

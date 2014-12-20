@@ -36,7 +36,7 @@ namespace Fleetcom.Library.GameObjects.Ships
                 public static class Railgun
                 {
                     public static readonly TimeSpan FireRate = new TimeSpan(0, 0, 0, 0, 1);
-                    public const float ProjectileSpeed = 50f;
+                    public const float ProjectileSpeed = 15f;
                 }
 
                 public static class Missiles

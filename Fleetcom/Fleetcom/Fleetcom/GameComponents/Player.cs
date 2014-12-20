@@ -1,4 +1,5 @@
 using System;
+using Fleetcom.Library;
 using Fleetcom.Library.Content;
 using Fleetcom.Library.Controls;
 using Fleetcom.Library.GameObjects.Ships;
@@ -14,7 +15,7 @@ using Events = Fleetcom.Library.GameComponents.Events;
 
 namespace Fleetcom.GameComponents
 {
-    public class Player : DrawableGameComponent
+    public class Player : IGameObject
     {
         public enum PlayerState
         {
@@ -26,80 +27,61 @@ namespace Fleetcom.GameComponents
         private Ship _playerShip;
         private WeaponsMenu _menu;
 
-        private SpriteBatch _spriteBatch;
-        private Game _game;
+        private Game1 _game;
         
         private PlayerState _currentPlayerState;
         private PlayerState _lastPlayerState;
         
-        public Player(Game game)
-            : base(game)
+        public Player(Game1 game)
         {
             _game = game;
             _currentPlayerState = PlayerState.Flying;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            _spriteBatch = new SpriteBatch(_game.GraphicsDevice);
-
-            Controller.RightShoulderHeld += OpenWeaponMenu;
-            Controller.RightShoulderPressed += ControllerRightShoulderPressed;
+            Controller.RightShoulderPressed += Controller_RightShoulderPressed;
             Controller.RightTriggerPressed += Controller_RightTriggerPressed;
-
-            base.Initialize();
         }
 
 
-        protected override void LoadContent()
+        public void LoadContent()
         {
             //TODO: Replace with getting player's currently selected ship
-            _playerShip = new F302(((Game1)Game).ContentManager, new Vector2(300, 300));
+            _playerShip = new F302(_game.ContentManager, new Vector2(300, 300));
             _playerShip.Initialize();
 
-            _menu = new WeaponsMenu(((Game1)Game).ContentManager);            
-
-            base.LoadContent();
+            _menu = new WeaponsMenu(_game.ContentManager);            
+            _menu.Initialize(_playerShip);
+            _menu.StateChanged += Menu_StateChanged;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            switch (_currentPlayerState)
+            switch (_menu.State)
             {
-                case PlayerState.Flying:
+                case WeaponsMenu.MenuStates.Closing:
+                case WeaponsMenu.MenuStates.Closed:
                     GetRotation();
                     GetMovement();
                     GetStrafe();
                     break;
 
-                case PlayerState.WeaponsMenu:
+                case WeaponsMenu.MenuStates.Opening:
+                case WeaponsMenu.MenuStates.Opened:
                     GetRotation();
                     GetMovement();
-                    _menu.Update(gameTime);
                     break;
             }
 
+            _menu.Update(gameTime);
             _playerShip.Update(gameTime);
-
-            base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            _spriteBatch.Begin();
-
-            _playerShip.Draw(_spriteBatch);
-
-            switch (_currentPlayerState)
-            {
-                case PlayerState.WeaponsMenu:
-                    _menu.Draw(_spriteBatch);
-                    break;
-            }
-
-            _spriteBatch.End();
-
-            base.Draw(gameTime);
+            _playerShip.Draw(spriteBatch);
+            _menu.Draw(spriteBatch);
         }
 
         private void GetRotation()
@@ -164,17 +146,7 @@ namespace Fleetcom.GameComponents
         }
 
         #region Event Handlers
-        private void OpenWeaponMenu()
-        {
-            _lastPlayerState = _currentPlayerState;
-            _currentPlayerState = PlayerState.WeaponsMenu;
-
-            if (StateChanged != null)
-                StateChanged(_currentPlayerState, _lastPlayerState);
-
-            _menu.OpenMenu();
-        }
-        private void ControllerRightShoulderPressed()
+        private void Controller_RightShoulderPressed()
         {
             var nextWeaponArray = _playerShip.CurrentWeaponArray + 1;
 
@@ -186,6 +158,20 @@ namespace Fleetcom.GameComponents
         private void Controller_RightTriggerPressed()
         {
             _playerShip.FireWeapons();
+        }
+        private void Menu_StateChanged(WeaponsMenu.MenuStates newState, WeaponsMenu.MenuStates oldState)
+        {
+            switch (newState)
+            {
+                case WeaponsMenu.MenuStates.Opened:
+                    Console.WriteLine("Player : Unsubscribing from right pressed event");
+                    Controller.RightShoulderPressed -= Controller_RightShoulderPressed;
+                    break;
+
+                case WeaponsMenu.MenuStates.Closing:
+                    Controller.RightShoulderPressed += Controller_RightShoulderPressed;
+                    break;
+            }
         }
         #endregion
     }

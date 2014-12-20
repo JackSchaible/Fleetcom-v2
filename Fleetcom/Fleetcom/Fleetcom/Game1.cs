@@ -15,7 +15,7 @@ namespace Fleetcom
         #region GameComponents
 
         public readonly ContentManager ContentManager;
-        private Player _player;
+        private InGame _inGameComponent;
         #endregion
 
         private GraphicsDeviceManager _graphicsManager;
@@ -33,11 +33,11 @@ namespace Fleetcom
 
             _gameState = GameStates.InGanme;
 
-            _player = new Player(this);
+            _inGameComponent = new InGame(this);
             ContentManager = new ContentManager(this);
 
             Components.Add(ContentManager);
-            Components.Add(_player);
+            Components.Add(_inGameComponent);
 
             //_graphicsManager.PreferredBackBufferWidth = 1920;
             //_graphicsManager.PreferredBackBufferHeight = 1080;
@@ -53,8 +53,8 @@ namespace Fleetcom
             Keyboard.Enabled = true;
             Keyboard.EscapePressed += Exit;
 
-            _player.Enabled = true;
-            _player.Visible = true;
+            _inGameComponent.Enabled = true;
+            _inGameComponent.Visible = true;
 
 
 #if DEBUG
@@ -95,8 +95,8 @@ namespace Fleetcom
             switch (newGameState)
             {
                 case GameStates.InGanme:
-                    _player.Enabled = true;
-                    _player.Visible = true;
+                    _inGameComponent.Enabled = true;
+                    _inGameComponent.Visible = true;
                     break;
             }
         }

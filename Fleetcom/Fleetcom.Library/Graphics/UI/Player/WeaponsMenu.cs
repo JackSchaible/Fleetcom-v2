@@ -1,50 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using Fleetcom.Library.Content;
 using Fleetcom.Library.Controls;
 using Fleetcom.Library.GameObjects.Ships;
 using Fleetcom.Library.Graphics.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Events = Fleetcom.Library.GameComponents.Events;
 
 namespace Fleetcom.Library.Graphics.UI.Player
 {
     public class WeaponsMenu : IGameObject
     {
-        private const int TotalFrames = 30;
-
-        private int _currentFrame;
-        private float _downSpeed;
-
-        
-        private Sprite _menuSprite;
-        private List<Sprite> _weapons;
-
-        private MenuStates _state;
-
-        private enum MenuStates
+        public enum MenuStates
         {
             Opened,
             Opening,
             Closed,
             Closing
         }
+        public MenuStates State;
+        public event Events.StateChanged<MenuStates> StateChanged;
 
+        private MenuStates _previousMenuState;
+
+        private const int TotalFrames = 30;
+        private const int StateChangeDelay = 120;
+
+        private int _delayTimer;
+        private int _currentFrame;
+        private float _downSpeed;
+
+        
+        private Sprite _menuSprite;
+        private List<Sprite> _weapons;
+        
         public WeaponsMenu(ContentManager manager)
         {
             _menuSprite = new Sprite(manager.TextureContent[Keys.UI.Player.WeaponsMenu], new Vector2(-1, -150), Sprite.OriginModes.TopLeft);
             _weapons = new List<Sprite>();
 
-            _state = MenuStates.Closed;
+            State = MenuStates.Closed;
+            _previousMenuState = MenuStates.Closed;
 
+            _delayTimer = 0;
             _currentFrame = 0;
-            _downSpeed = (float)(_menuSprite.Texture.Height / (TotalFrames * 0.8));
+            _downSpeed = _menuSprite.Texture.Height / TotalFrames;
 
-            Controller.RightShoulderHeld += OpenMenu;
+            StateChanged += OnStateChanged;
         }
 
         public void Initialize(Ship ship)
         {
+            Controller.RightShoulderHeld += Controller_RightShoudlerHeld;
+
             foreach (var item in ship.WeaponArrays)
             {
                 //TODO: Add icon to weaponarray class
@@ -53,35 +63,54 @@ namespace Fleetcom.Library.Graphics.UI.Player
         
         public void Update(GameTime gameTime)
         {
-            switch (_state)
+            
+            switch (State)
             {
                 case MenuStates.Closing:
+                    _menuSprite.Position = new Vector2(-1, -((_currentFrame * _downSpeed)));
+
+                    _currentFrame++;
+
+                    if (_menuSprite.Position.Y <= -150)
+                    {
+                        _menuSprite.Position = new Vector2(-1, -150);
+
+                        _previousMenuState = State;
+                        State = MenuStates.Closed;
+
+                        StateChanged(State, _previousMenuState);
+
+                        _currentFrame = 0;
+                    }
                     break;
 
                 case MenuStates.Closed:
-                    _currentFrame = 0;
                     break;
 
                 case MenuStates.Opening:
-                    //Fix easing
-                    if (_currentFrame < (TotalFrames * 0.8))
-                        _menuSprite.Position = new Vector2(-1, (_currentFrame * _downSpeed) - _menuSprite.Texture.Height);
-                    else
-                        _menuSprite.Position = new Vector2(-1, (_downSpeed * (_currentFrame - TotalFrames)) - _menuSprite.Texture.Height);
+                    _menuSprite.Position = new Vector2(-1, (_currentFrame * _downSpeed) - _menuSprite.Texture.Height);
+                    _currentFrame++;
 
                     if (_menuSprite.Position.Y >= -1)
                     {
                         _menuSprite.Position = new Vector2(-1, -1);
-                        _state = MenuStates.Opened;
+
+                        _previousMenuState = State;
+                        State = MenuStates.Opened;
+
+                        StateChanged(State, _previousMenuState);
+
+                        _currentFrame = 0;
                     }
-                    
-                    _currentFrame++;
                     break;
 
                 case MenuStates.Opened:
-                    _currentFrame = 0;
+                    //Handle weapon switching
                     break;
             }
+
+            if (_delayTimer > 0)
+                _delayTimer--;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -89,14 +118,54 @@ namespace Fleetcom.Library.Graphics.UI.Player
             _menuSprite.Draw(spriteBatch);
         }
 
-        public void OpenMenu()
+        private void OnStateChanged(MenuStates newState, MenuStates oldState)
         {
-            _state = MenuStates.Opening;
+            switch (newState)
+            {
+                case MenuStates.Opening:
+                case MenuStates.Closing:
+                    Controller.RightShoulderHeld -= SwitchState;
+                    break;
+
+                case MenuStates.Opened:
+                case MenuStates.Closed:
+                    Controller.RightShoulderHeld += SwitchState;
+                    break;
+            }
         }
 
-        public void CloseMenu()
+        private void SwitchState()
         {
-            
+            if (_delayTimer != 0)
+                return;
+
+            _delayTimer = StateChangeDelay;
+            switch (State)
+            {
+                case MenuStates.Closed:
+                    _previousMenuState = State;
+                    State = MenuStates.Opening;
+                    StateChanged(State, _previousMenuState);
+                    break;
+
+                case MenuStates.Opened:
+                    _previousMenuState = State;
+                    State = MenuStates.Closing;
+                    StateChanged(State, _previousMenuState);
+                    break;
+            }
+        }
+
+        private void Controller_RightShoudlerHeld()
+        {
+            Controller.RightShoulderHeld -= Controller_RightShoudlerHeld;
+
+            _previousMenuState = State;
+            State = MenuStates.Opening;
+
+            _delayTimer = StateChangeDelay;
+
+            StateChanged(State, _previousMenuState);
         }
     }
 }
